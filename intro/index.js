@@ -449,6 +449,130 @@ updateRecords(2468, "tracks", "test");
 console.log(updateRecords(5439, "artist", "ABBA"));
 
 //---------------------------------------------------------------
+// REST OPERATOR: compresses the arguments into one array
+
+const sum = (function() {9
+    return function sum(...args) {      // the ...args takes in any number of args and puts them into an array
+        return args.reduce((a,b) => a + b, 0);      // sums the elements of the array       // => is the lambda function
+    };
+})();
+console.log(sum(1,2,3,4));
+
+//---------------------------------------------------------------
+// SPREAD OPERATOR: expands the already existing array
+const arr1 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY'];
+let arr2;       // cannot reasign a let variable (scope defined)
+(function() {
+    arr2 = arr1;    // normal : prints potato at [0]
+    arr2 = [...arr1];       // prints 'JAN' at index [0]
+    arr1[0] = 'potato';
+})();
+console.log(arr2);
+
+//---------------------------------------------------------------
+// TEMPLATE LITERALS
+
+const result = {
+    success: ["max-length", "no-amd", "prefer-arrow-functions"],
+    failure: ["no-var", "var-on-top", "linebreak"],
+    skipped: ["id-blacklist", "no-dup-keys"]
+};
+function makeList(arr) {
+    const resultDisplayArray = [];
+    for (let i = 0; i < arr.length; i++) {
+        resultDisplayArray.push(`<li class="text-warning">${arr[i]}</li>`);
+    }
+    return resultDisplayArray;
+}
+
+/**
+ * makeList(result.failure) should return:
+ * [ `<li class="text-warning">no-var</li>`,
+ *   `<li class="text-warning">var-on-top</li>`,
+ *   `<li class="text-warning">linebreak</li>`]
+ */
+
+const resultDisplayArray = makeList(result.failure);
+console.log(resultDisplayArray);
+
+//---------------------------------------------------------------
+// SIMPLE FIELDS: OBJECT CREATION
+
+const createPerson = (name, age, gender) => ({ name, age, gender }) ;
+console.log(createPerson("Pankrit Jindal", 21, "male"));    // returns key-value pairs: {name: ..., age: ..., gender: ..}
+
+//---------------------------------------------------------------
+// CLASSES
+
+function makeClass() {
+    class Vegetable {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+    return Vegetable;
+}
+
+const Vegetable = makeClass();
+const carrot = new Vegetable('carrot');     // calls the constructor
+console.log(carrot.name);
+
+//---------------------------------------------------------------
+// GETTERS AND SETTERS
+
+class Book {
+    constructor(author) {
+        this._author = author;      // _ named variables are like pvt vars in java
+    }
+    // getter
+    get writer() {
+        return this._author;
+    }
+    // setter
+    set writer(updatedAuthor) {
+        this._author = updatedAuthor;
+    }
+}
+
+function makeClass() {
+    class Thermostat {
+        constructor(temp) {
+            this._temp = 5/9 * (temp - 32);
+        }
+        get temperature() {
+            return this._temp;
+        }
+        set temperature(updatedTemp) {
+            this._temp = updatedTemp;
+        }
+    }
+    return Thermostat;
+}
+const Thermostat = makeClass();     // returns the thermo object
+const thermos = new Thermostat(76); // constructor called, instantiated the object with 'new' keyword and passed in 76 degree Fahrenheit
+let temp = thermos.temperature;     // getter is called to get the temp in Celsius
+thermos.temperature = 26;           // setter sets the new temp to 26F
+temp = thermos.temperature;         // getter fetches the new temp converted into C
+console.log(temp);
+
+//---------------------------------------------------------------
+// IMPORT AND EXPORT FILES
+import { functionName } from "fileNameFromWhichImport"
+import * as objectToStoreEverythingImported from "fileName";
+
+// to export a function/variable just add 'export' keyword in the front
+
+// exporting a function
+const capitalizeString = (string) => { 
+    return string.charAt(0).toUpperCase() + string.slice(1); 
+}
+
+export { capitalizeString };
+
+// exporting vars
+export const foo = 'bar';
+export const bar = 'foo';
+
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 //---------------------------------------------------------------
